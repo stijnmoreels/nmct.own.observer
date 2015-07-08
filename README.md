@@ -32,7 +32,8 @@ public abstract class Subject<T, S>
     }
 ```
 
-## Observer (abstract): ProductObserver, (in the future: EmployeeOberver and CutomerObserver)
+## Observer (abstract): ProductObserver
+### (in the future: EmployeeOberver and CutomerObserver)
 Abstract class for the Observers, has an "Update"-Method that has to be overridden.
 ```
 public abstract class Observer<T, S>
