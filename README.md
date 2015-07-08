@@ -10,7 +10,7 @@ The same setup can be performed for the "Employee" and "Customer" properties.
 
 So:
 
-## Subject (abstract): SaleSubject
+## BaseSubject : Subject (abstract)
 Abstract class for the Subject. Any class can inherit from this class and make a subject.
 (T = Type, S = State)
 The Notify-Method will run the "Update"-Method from all the initialized observers.
@@ -32,7 +32,7 @@ public abstract class Subject<T, S>
     }
 ```
 
-## Observer (abstract): ProductObserver
+## BaseObserver : Observer (abstract)
 ### (in the future: EmployeeOberver and CutomerObserver)
 Abstract class for the Observers, has an "Update"-Method that has to be overridden.
 ```
