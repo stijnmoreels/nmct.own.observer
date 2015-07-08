@@ -10,7 +10,10 @@ The same setup can be performed for the "Employee" and "Customer" properties.
 
 So:
 
-Subject (abstract): SaleSubject
+## Subject (abstract): SaleSubject
+Abstract class for the Subject. Any class can inherit from this class and make a subject.
+(T = Type, S = State)
+The Notify-Method will run the "Update"-Method from all the initialized observers.
 
 ```
 public abstract class Subject<T, S>
@@ -29,8 +32,15 @@ public abstract class Subject<T, S>
     }
 ```
 
-Observer (abstract): ProductObserver, (in the future: EmployeeOberver and CutomerObserver)
-
+## Observer (abstract): ProductObserver, (in the future: EmployeeOberver and CutomerObserver)
+Abstract class for the Observers, has an "Update"-Method that has to be overridden.
+```
+public abstract class Observer<T, S>
+        where T : class
+        where S : struct,  IComparable, IFormattable, IConvertible
+    {
+        public abstract void Update(object sender, Tuple<Sale, SaleState> item);
+    }
 ```
 
-```
+
