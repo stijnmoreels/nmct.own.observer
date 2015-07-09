@@ -44,4 +44,45 @@ public abstract class Observer<T, S>
     }
 ```
 
+## Asynchronously Notify Observers
 
+Async Subject
+```
+public abstract class SubjectAsync<T, S>
+        where T : class
+        where S : struct,  IComparable, IFormattable, IConvertible
+    {
+        public T Data { get; set; }
+
+        public event EventHandler<Tuple<T, S>> Notify;
+
+        public async Task NotifyObserversAsync(object sender, T data, S state)
+        {
+            if (data != null)
+                await Task.Run(() => { this.Notify(sender, Tuple.Create<T, S>(data, state)); });
+        }
+    }
+```
+
+Async Call Method in Controller
+
+```
+[HttpPost]
+        public RedirectToRouteResult Edit(Sale sale)
+        {
+            using (SalesDBEntities context = new SalesDBEntities())
+            {
+                Sale findSale = context.Sales.Where(s => s.SalesID == sale.SalesID).SingleOrDefault<Sale>();
+                findSale.Quantity = sale.Quantity;
+                context.SaveChanges();
+            }
+            // ---------------
+            // (***In Here***)
+            //---------------
+            Task.Run(async () => 
+            { 
+                await this.SaleSubjectController.Subject.NotifyObserversAsync(this, sale, SaleState.SALE_UPDATE); 
+            });
+            return RedirectToAction("Index");
+        }
+```
